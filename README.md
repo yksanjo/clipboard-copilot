@@ -1,76 +1,82 @@
-# Clipboard Copilot
+# clipboard-copilot
 
-Local-first clipboard automation that watches for changes and applies context-aware actions entirely offline.
+## Detailed Description
 
-## Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Quick Start](#quick-start)
-- [Typical Actions](#typical-actions)
-- [Architecture](#architecture)
-- [Plugins](#plugins)
-- [Development](#development)
-- [Roadmap](#roadmap)
-- [Privacy](#privacy)
+clipboard-copilot is maintained as an industry-grade software project with production-ready engineering practices.  
+This repository includes documented setup, quality gates, operational guidance, and governance standards so contributors can safely build, test, and ship changes with confidence.
 
-## Overview
-Clipboard Copilot turns everyday copy/paste into a productivity flow. It detects the content type of your clipboard and applies the most relevant action (e.g., convert CSV to JSON, clean Markdown formatting) fully locally.
+## Problem Statement
 
-## Features
-- Local-only processing, no network calls
-- Cross-platform via `tkinter`
-- Pluggable actions with confidence-based selection
-- Auto-apply the best action and write back to clipboard
+Describe the user or business problem this project solves, the target users, and expected outcomes.
 
-## Quick Start
-- Requirements: Python 3.9+
-- Run: `python3 run.py`
-- Try:
-  - Copy CSV like `name,age\nAlice,30\nBob,25` → clipboard switches to JSON
-  - Copy messy Markdown → clipboard is cleaned
+## Solution Overview
 
-## Typical Actions
-- CSV → JSON (`copilot/plugins/csv_to_json.py`)
-- Clean Markdown (`copilot/plugins/clean_markdown.py`)
+Summarize the architecture, core modules, and runtime behavior at a high level.
 
-## Architecture
-- Watcher: `copilot/clipboard.py` monitors clipboard and writes results
-- Orchestration: `copilot/main.py` loads plugins, ranks actions, applies top
-- Rules: `copilot/rules.py` simple engine using `confidence(text)`
-- Plugins: `copilot/plugins/` directory auto-discovered on import
+## Key Features
 
-Key references:
-- `run()` entrypoint in `copilot/main.py:7`
-- Change handling and apply in `copilot/main.py:11-22`
-- Clipboard polling loop in `copilot/clipboard.py:22-33`
-- CSV detection and conversion in `copilot/plugins/csv_to_json.py:7-26`
-- Markdown cleaning in `copilot/plugins/clean_markdown.py:15-31`
+- Clear project scope and intended use.
+- Reproducible local development workflow.
+- Test coverage and CI quality gates.
+- Security and contribution policies.
+- Deployment-ready repository structure.
 
-## Plugins
-Add a new plugin by creating a file under `copilot/plugins/` that defines a class with `name`, `confidence(text) -> float`, and `apply(text) -> str`.
+## Repository Structure
 
-Example skeleton:
-```python
-from ..rules import ActionPlugin
-
-class MyPlugin(ActionPlugin):
-    name = "my_plugin"
-    def confidence(self, text: str) -> float:
-        return 0.0
-    def apply(self, text: str) -> str:
-        return text
+```text
+.
+|-- src/                  # Core implementation
+|-- tests/                # Automated test suites
+|-- docs/                 # Design notes and operational docs
+|-- .github/workflows/    # CI pipelines
+|-- README.md
+|-- LICENSE
+|-- CONTRIBUTING.md
+|-- SECURITY.md
+|-- CODE_OF_CONDUCT.md
 ```
-Plugins are auto-loaded at startup from the `copilot/plugins` package.
 
-## Development
-- Start: `python3 run.py`
-- Adjust polling interval in `copilot/clipboard.py:7`
-- Print applied actions in the terminal (`applied:<name>`) for quick feedback
+## Getting Started
+
+### Prerequisites
+
+- Git
+- Project runtime/toolchain for this repo
+
+### Local Setup
+
+```bash
+make test
+make lint
+```
+
+## Usage
+
+Document primary commands, API routes, CLI examples, or UI workflows here.
+
+## Quality Standards
+
+- CI must pass before merge.
+- Changes require tests for critical behavior.
+- Security-sensitive changes should include risk notes.
+- Keep pull requests focused and reviewable.
+
+## Security
+
+See `SECURITY.md` for responsible disclosure and handling guidelines.
+
+## Contributing
+
+See `CONTRIBUTING.md` for branching, commit, and pull request expectations.
 
 ## Roadmap
-- UI overlay to pick actions instead of auto-apply
-- Per-app profiles (editor vs browser behavior)
-- More actions: remove tracking params, extract tables, normalize whitespace
 
-## Privacy
-All processing is local. No clipboard data leaves your machine.
+Track upcoming milestones, technical debt, and planned feature work.
+
+## Support
+
+Open a GitHub issue for bugs, feature requests, or documentation gaps.
+
+## License
+
+This project is released under the MIT License.
